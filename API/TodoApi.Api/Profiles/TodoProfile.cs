@@ -8,7 +8,8 @@ namespace TodoApi.Api.Profiles
     {
         public TodoProfile()
         {
-            this.CreateMap<Todo, TodoDTO>();
+            this.CreateMap<Todo, TodoDTO>()
+                .ReverseMap();
         }
     }
 }

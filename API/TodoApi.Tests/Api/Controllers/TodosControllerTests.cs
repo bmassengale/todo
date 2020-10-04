@@ -94,5 +94,56 @@ namespace TodoApi.Tests.Api.Controllers
 
             Assert.Equal(expected, actual);
         }
+        
+        [Fact]
+        public async Task GivenValidTodoDTO_PostNewTodo()
+        {
+            TodoDTO newTodoDTO = new TodoDTO() { Title = "Learn to dunk a basketball", IsComplete = false };
+            Todo newTodo = new Todo() { TodoId = 7, Title = "Learn to dunk a basketball", IsComplete = false, Something = null };
+            _todoRepositoryMock.Setup(x => x.SaveAllChangesAsync()).Verifiable();
+            _todoRepositoryMock.Setup(x => x.CreateTodoAsync(It.IsAny<Todo>())).ReturnsAsync(newTodo);
+            _todoRepositoryMock.Setup(x => x.GetSingleTodoAsync(newTodo.TodoId)).ReturnsAsync(newTodo);
+            string expected = newTodoDTO.Title;
+
+            ActionResult<TodoDTO> response = await _todosController.CreateTodo(newTodoDTO);
+            CreatedAtActionResult parsedResponse = response.Result as CreatedAtActionResult;
+            TodoDTO actual = parsedResponse.Value as TodoDTO;
+
+            Assert.Equal(expected, actual.Title);
+        }
+
+        [Fact]
+        public async Task GivenValidTodoDTOWithoutIsCompleteValue_PostNewTodo()
+        {
+            TodoDTO newTodoDTO = new TodoDTO() { Title = "Learn to dunk a basketball" };
+            Todo newTodo = new Todo() { TodoId = 7, Title = "Learn to dunk a basketball", IsComplete = false, Something = null };
+            _todoRepositoryMock.Setup(x => x.SaveAllChangesAsync()).Verifiable();
+            _todoRepositoryMock.Setup(x => x.CreateTodoAsync(It.IsAny<Todo>())).ReturnsAsync(newTodo);
+            _todoRepositoryMock.Setup(x => x.GetSingleTodoAsync(newTodo.TodoId)).ReturnsAsync(newTodo);
+            bool expected = false;
+
+            ActionResult<TodoDTO> response = await _todosController.CreateTodo(newTodoDTO);
+            CreatedAtActionResult parsedResponse = response.Result as CreatedAtActionResult;
+            TodoDTO actual = parsedResponse.Value as TodoDTO;
+
+            Assert.Equal(expected, actual.IsComplete);
+        }
+
+        [Fact]
+        public async Task GivenValidPostTodoDTO_GetCreatedStatusCode()
+        {
+            TodoDTO newTodoDTO = new TodoDTO() { Title = "Learn to dunk a basketball", IsComplete = false };
+            Todo newTodo = new Todo() { TodoId = 7, Title = "Learn to dunk a basketball", IsComplete = false, Something = null };
+            _todoRepositoryMock.Setup(x => x.SaveAllChangesAsync()).Verifiable();
+            _todoRepositoryMock.Setup(x => x.CreateTodoAsync(It.IsAny<Todo>())).ReturnsAsync(newTodo);
+            _todoRepositoryMock.Setup(x => x.GetSingleTodoAsync(newTodo.TodoId)).ReturnsAsync(newTodo);
+            int expected = 201;
+
+            ActionResult<TodoDTO> response = await _todosController.CreateTodo(newTodoDTO);
+            CreatedAtActionResult parsedResponse = response.Result as CreatedAtActionResult;
+            int actual = (int)parsedResponse.StatusCode;
+
+            Assert.Equal(expected, actual);
+        }  
     }
-}
+}   

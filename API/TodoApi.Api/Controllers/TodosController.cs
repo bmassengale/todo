@@ -46,12 +46,13 @@ namespace TodoApi.Api.Controllers
             return Ok(result);
         }
 
-        [HttpPut]
+        [HttpPost]
         public async Task<ActionResult<TodoDTO>> CreateTodo(TodoDTO todo)
         {
             Todo newTodo = _mapper.Map<Todo>(todo);
-            Todo result = await _todoRepository.CreateTodoAsync(newTodo);
+            Todo response = await _todoRepository.CreateTodoAsync(newTodo);
             await _todoRepository.SaveAllChangesAsync();
+            TodoDTO result = _mapper.Map<TodoDTO>(response);
             
             return CreatedAtAction(
             nameof(GetTodo),

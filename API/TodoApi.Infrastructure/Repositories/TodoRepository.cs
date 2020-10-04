@@ -30,10 +30,10 @@ namespace TodoApi.Infrastructure.Repositories
 
         public async Task<Todo> CreateTodoAsync(Todo todo)
         {
-            var something = await _context.Todos.AddAsync(todo);
-            Todo something2 = something.Entity;
+            var response = await _context.Todos.AddAsync(todo);
+            Todo result = response.Entity;
 
-            return something2;
+            return result;
         }
 
         public async Task RemoveTodoAsync()
