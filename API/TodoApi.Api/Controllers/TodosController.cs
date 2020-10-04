@@ -45,6 +45,19 @@ namespace TodoApi.Api.Controllers
 
             return Ok(result);
         }
+
+        [HttpPut]
+        public async Task<ActionResult<TodoDTO>> CreateTodo(TodoDTO todo)
+        {
+            Todo newTodo = _mapper.Map<Todo>(todo);
+            Todo result = await _todoRepository.CreateTodoAsync(newTodo);
+            await _todoRepository.SaveAllChangesAsync();
+            
+            return CreatedAtAction(
+            nameof(GetTodo),
+            new { id = result.TodoId },
+            result);
+        }
     }
 }
  

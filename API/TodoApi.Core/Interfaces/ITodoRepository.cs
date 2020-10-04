@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using TodoApi.Core.Entities;
 
 namespace TodoApi.Core.Interfaces
@@ -9,7 +8,8 @@ namespace TodoApi.Core.Interfaces
         Task<Todo[]> GetAllTodosAsync();
         Task<Todo> GetSingleTodoAsync(int id);
         Task<Todo> UpdateTodoAsync();
-        Task<Todo> CreateTodoAsync();
-        void RemoveTodoAsync();
+        Task<Todo> CreateTodoAsync(Todo todo);
+        Task RemoveTodoAsync();
+        Task SaveAllChangesAsync();
     }
 }

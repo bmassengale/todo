@@ -28,19 +28,27 @@ namespace TodoApi.Infrastructure.Repositories
             return result;
         }
 
+        public async Task<Todo> CreateTodoAsync(Todo todo)
+        {
+            var something = await _context.Todos.AddAsync(todo);
+            Todo something2 = something.Entity;
+
+            return something2;
+        }
+
+        public async Task RemoveTodoAsync()
+        {
+            throw new System.NotImplementedException();
+        }
+
         public async Task<Todo> UpdateTodoAsync()
         {
             throw new System.NotImplementedException();
         }
 
-        public async Task<Todo> CreateTodoAsync()
+        public async Task SaveAllChangesAsync()
         {
-            throw new System.NotImplementedException();
-        }
-
-        public async void RemoveTodoAsync()
-        {
-            throw new System.NotImplementedException();
+            await _context.SaveChangesAsync();
         }
     }
 }
