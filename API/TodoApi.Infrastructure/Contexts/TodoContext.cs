@@ -7,6 +7,6 @@ namespace TodoApi.Infrastructure.Contexts
     {
         public TodoContext(DbContextOptions options) : base(options) { }
 
-        public DbSet<Todo> Todos { get; set; }
+        public DbSet<Todo> todos { get; set; }
     }
 }

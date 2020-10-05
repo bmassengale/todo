@@ -21,23 +21,23 @@ namespace TodoApi.Tests.Api.Profiles
         {
             Todo original = new Todo()
             {
-                TodoId = 1,
-                Title = "Cook lunch",
-                IsComplete = false,
-                Something = "Chicago"
+                todoid = 1,
+                title = "Cook lunch",
+                iscomplete = false,
+                something = "Chicago"
             };
             TodoDTO expected = new TodoDTO()
             {
-                TodoId = 1,
-                Title = "Cook lunch",
-                IsComplete = false
+                todoid = 1,
+                title = "Cook lunch",
+                iscomplete = false
             };
 
             TodoDTO actual = _mapper.Map<TodoDTO>(original);
 
-            Assert.Equal(expected.TodoId, actual.TodoId);
-            Assert.Equal(expected.Title, actual.Title);
-            Assert.Equal(expected.IsComplete, actual.IsComplete);
+            Assert.Equal(expected.todoid, actual.todoid);
+            Assert.Equal(expected.title, actual.title);
+            Assert.Equal(expected.iscomplete, actual.iscomplete);
         }
     }
 }
