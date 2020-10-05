@@ -59,6 +59,22 @@ namespace TodoApi.Api.Controllers
             new { id = result.TodoId },
             result);
         }
+        
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteTodo(int id)
+        {
+            Todo todoToDelete = await _todoRepository.GetSingleTodoAsync(id);
+
+            if (todoToDelete == null)
+            {
+                return NotFound();
+            }
+
+            _todoRepository.DeleteTodoAsync(todoToDelete);
+            await _todoRepository.SaveAllChangesAsync();
+
+            return NoContent();
+        }
     }
 }
  

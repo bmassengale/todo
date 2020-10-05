@@ -9,7 +9,7 @@ namespace TodoApi.Core.Interfaces
         Task<Todo> GetSingleTodoAsync(int id);
         Task<Todo> UpdateTodoAsync();
         Task<Todo> CreateTodoAsync(Todo todo);
-        Task RemoveTodoAsync();
+        void DeleteTodoAsync(Todo todo);
         Task SaveAllChangesAsync();
     }
 }

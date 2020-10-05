@@ -36,9 +36,9 @@ namespace TodoApi.Infrastructure.Repositories
             return result;
         }
 
-        public async Task RemoveTodoAsync()
+        public void DeleteTodoAsync(Todo todo)
         {
-            throw new System.NotImplementedException();
+             _context.Remove(todo);
         }
 
         public async Task<Todo> UpdateTodoAsync()
@@ -48,7 +48,7 @@ namespace TodoApi.Infrastructure.Repositories
 
         public async Task SaveAllChangesAsync()
         {
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync(); 
         }
     }
 }

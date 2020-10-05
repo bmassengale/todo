@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using TodoApi.Api.Controllers;
 using TodoApi.Api.DTOs;
@@ -144,6 +145,58 @@ namespace TodoApi.Tests.Api.Controllers
             int actual = (int)parsedResponse.StatusCode;
 
             Assert.Equal(expected, actual);
-        }  
+        }
+
+        [Theory]
+        [InlineData(1)]
+        [InlineData(2)]
+        [InlineData(3)]
+        public async Task GivenValidId_ReturnArrayWithDeletedTodo(int id)
+        {
+            Todo[] allTodos = new Todo[]
+            {
+                new Todo() { TodoId = 1, Title = "Do this", IsComplete = false },
+                new Todo() { TodoId = 2, Title = "Then this", IsComplete = true },
+                new Todo() { TodoId = 3, Title = "And maybe this", IsComplete = false }
+            };
+            int expected = allTodos.Length - 1;
+            List<Todo> listToReturn = new List<Todo>();
+            for(int i = 1; i <= 3; i++)
+            {
+                if(allTodos[i-1].TodoId == id)
+                {
+                    continue;
+                }
+                else
+                {
+                    listToReturn.Add(allTodos[i-1]);
+                }
+            }
+            _todoRepositoryMock.Setup(x => x.SaveAllChangesAsync()).Verifiable();
+            _todoRepositoryMock.Setup(x => x.GetSingleTodoAsync(It.IsAny<int>())).ReturnsAsync(allTodos[id-1]);
+            _todoRepositoryMock.Setup(x => x.DeleteTodoAsync(It.IsAny<Todo>())).Verifiable();
+
+            ActionResult response = await _todosController.DeleteTodo(id);
+            int actual = listToReturn.Count;
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Theory]
+        [InlineData(112)]
+        [InlineData(245)]
+        [InlineData(32)]
+        public async Task GivenInvalidIdForDeleteRequest_ReturnNotFoundResults(int id)
+        {
+            Todo returnValue = null;
+            int expected = 404;
+            _todoRepositoryMock.Setup(x => x.GetSingleTodoAsync(id)).ReturnsAsync(returnValue);
+
+            ActionResult<TodoDTO> response = await _todosController.DeleteTodo(id);
+            NotFoundResult parsedResponse = response.Result as NotFoundResult;
+            int actual = parsedResponse.StatusCode;
+
+            Assert.Equal(expected, actual);
+        }
     }
 }   
