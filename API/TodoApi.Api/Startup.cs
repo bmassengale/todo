@@ -8,7 +8,6 @@ using TodoApi.Core.Interfaces;
 using TodoApi.Infrastructure.Contexts;
 using TodoApi.Infrastructure.Repositories;
 using AutoMapper;
-using TodoApi.Core.Entities;
 using TodoApi.Api.DTOs;
 
 namespace TodoApi.Api
@@ -25,7 +24,7 @@ namespace TodoApi.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAutoMapper(typeof(TodoDTO));
-            services.AddDbContext<TodoContext>(options => options.UseSqlServer(Configuration.GetConnectionString("TestDb")));
+            services.AddDbContext<TodoContext>(options => options.UseNpgsql(Configuration.GetConnectionString("TestDb")));
             services.AddScoped<ITodoRepository, TodoRepository>();
             services.AddControllers();
         }

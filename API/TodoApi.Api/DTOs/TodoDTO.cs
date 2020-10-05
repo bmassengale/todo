@@ -5,10 +5,10 @@ namespace TodoApi.Api.DTOs
 {
     public class TodoDTO
     {
-        public int TodoId { get; set; }
+        public int todoid { get; set; }
         [Required]
-        public string Title { get; set; }
+        public string title { get; set; }
         [DefaultValue(false)]
-        public bool IsComplete { get; set; }
+        public bool iscomplete { get; set; }
     }
 }

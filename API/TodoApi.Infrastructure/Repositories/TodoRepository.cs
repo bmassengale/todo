@@ -19,13 +19,13 @@ namespace TodoApi.Infrastructure.Repositories
 
         public async Task<Todo[]> GetAllTodosAsync()
         {
-            Todo[] result = await _context.Todos.ToArrayAsync();
+            Todo[] result = await _context.todos.ToArrayAsync();
             return result;
         }
 
         public async Task<Todo> GetSingleTodoAsync(int id)
         {
-            Todo result = await _context.Todos.Where(x => x.TodoId == id)
+            Todo result = await _context.todos.Where(x => x.todoid == id)
                 .AsNoTracking()
                 .FirstOrDefaultAsync();
             return result;
@@ -33,7 +33,7 @@ namespace TodoApi.Infrastructure.Repositories
 
         public async Task<Todo> CreateTodoAsync(Todo todo)
         {
-            var response = await _context.Todos.AddAsync(todo);
+            var response = await _context.todos.AddAsync(todo);
             Todo result = response.Entity;
 
             return result;

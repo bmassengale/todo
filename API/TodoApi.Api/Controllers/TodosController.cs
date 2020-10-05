@@ -56,7 +56,7 @@ namespace TodoApi.Api.Controllers
             
             return CreatedAtAction(
             nameof(GetTodo),
-            new { id = result.TodoId },
+            new { id = result.todoid },
             result);
         }
         
@@ -79,12 +79,12 @@ namespace TodoApi.Api.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateTodo(int id, TodoDTO todo)
         {
-            if (id != todo.TodoId)
+            if (id != todo.todoid)
             {
                 return BadRequest();
             }
 
-            Todo response = await _todoRepository.GetSingleTodoAsync(todo.TodoId);
+            Todo response = await _todoRepository.GetSingleTodoAsync(todo.todoid);
 
             if (response == null)
             {
