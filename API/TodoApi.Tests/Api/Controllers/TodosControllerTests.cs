@@ -17,25 +17,24 @@ namespace TodoApi.Tests.Api.Controllers
         private readonly Mock<ITodoRepository> _todoRepositoryMock;
         private readonly TodosController _todosController;
         private readonly IMapper _mapper;
-        private Todo[] todoArray;
+
 
         public TodosControllerTests()
         {
             _todoRepositoryMock = new Mock<ITodoRepository>();
             _mapper = new Mapper(new MapperConfiguration(cfg => cfg.AddProfile<TodoProfile>()));
             _todosController = new TodosController(_todoRepositoryMock.Object, _mapper);
-            todoArray = new Todo[]
-            {
-                new Todo() { TodoId = 1, Title = "Do this", IsComplete = false, Something = "asdf"  },
-                new Todo() { TodoId = 2, Title = "Then this", IsComplete = true, Something = "qwerewr"  },
-                new Todo() { TodoId = 3, Title = "And maybe this", IsComplete = false, Something = "eree"  }
-            };
         }
 
         [Fact]
         public async Task GivenGetRequest_ReturnsAllTodosAsTodoDTO()
         {
-            Todo[] allTodos = todoArray;
+            Todo[] allTodos = new Todo[]
+            {
+                new Todo() { TodoId = 1, Title = "Do this", IsComplete = false, Something = "asdf"  },
+                new Todo() { TodoId = 2, Title = "Then this", IsComplete = true, Something = "qwerewr"  },
+                new Todo() { TodoId = 3, Title = "And maybe this", IsComplete = false, Something = "eree"  }
+            };
             TodoDTO[] expected = new TodoDTO[]
             {
                 new TodoDTO() { TodoId = 1, Title = "Do this", IsComplete = false },
@@ -58,7 +57,12 @@ namespace TodoApi.Tests.Api.Controllers
         [InlineData(3)]
         public async Task GivenValidId_ReturnSingleTodoDTO(int id)
         {
-            Todo[] allTodos = todoArray;
+            Todo[] allTodos = new Todo[]
+            {
+                new Todo() { TodoId = 1, Title = "Do this", IsComplete = false, Something = "asdf"  },
+                new Todo() { TodoId = 2, Title = "Then this", IsComplete = true, Something = "qwerewr"  },
+                new Todo() { TodoId = 3, Title = "And maybe this", IsComplete = false, Something = "eree"  }
+            };
             Todo randomTodo = new Todo();
             foreach (Todo todo in allTodos)
             {
@@ -95,7 +99,7 @@ namespace TodoApi.Tests.Api.Controllers
 
             Assert.Equal(expected, actual);
         }
-        
+
         [Fact]
         public async Task GivenValidTodoDTO_PostNewTodo()
         {
@@ -161,19 +165,19 @@ namespace TodoApi.Tests.Api.Controllers
             };
             int expected = allTodos.Length - 1;
             List<Todo> listToReturn = new List<Todo>();
-            for(int i = 1; i <= 3; i++)
+            for (int i = 1; i <= 3; i++)
             {
-                if(allTodos[i-1].TodoId == id)
+                if (allTodos[i - 1].TodoId == id)
                 {
                     continue;
                 }
                 else
                 {
-                    listToReturn.Add(allTodos[i-1]);
+                    listToReturn.Add(allTodos[i - 1]);
                 }
             }
             _todoRepositoryMock.Setup(x => x.SaveAllChangesAsync()).Verifiable();
-            _todoRepositoryMock.Setup(x => x.GetSingleTodoAsync(It.IsAny<int>())).ReturnsAsync(allTodos[id-1]);
+            _todoRepositoryMock.Setup(x => x.GetSingleTodoAsync(It.IsAny<int>())).ReturnsAsync(allTodos[id - 1]);
             _todoRepositoryMock.Setup(x => x.DeleteTodoAsync(It.IsAny<Todo>())).Verifiable();
 
             ActionResult response = await _todosController.DeleteTodo(id);
@@ -194,6 +198,57 @@ namespace TodoApi.Tests.Api.Controllers
 
             ActionResult<TodoDTO> response = await _todosController.DeleteTodo(id);
             NotFoundResult parsedResponse = response.Result as NotFoundResult;
+            int actual = parsedResponse.StatusCode;
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public async Task GivenPutRequest_ReturnStatus200()
+        {
+            Todo[] allTodos = new Todo[]
+            {
+                new Todo() { TodoId = 1, Title = "Do this", IsComplete = false, Something = "asdf"  },
+                new Todo() { TodoId = 2, Title = "Then this", IsComplete = true, Something = "qwerewr"  },
+                new Todo() { TodoId = 3, Title = "And maybe this", IsComplete = false, Something = "eree"  }
+            };
+            Todo foundTodo = allTodos[0];
+            TodoDTO updatedTodo = new TodoDTO() { TodoId = 1, Title = "Learn to skateboard", IsComplete = false};
+            int expected = 200;
+            _todoRepositoryMock.Setup(x => x.SaveAllChangesAsync()).Verifiable();
+            _todoRepositoryMock.Setup(x => x.UpdateTodoAsync(It.IsAny<Todo>())).Verifiable(foundTodo.Title = updatedTodo.Title);
+            _todoRepositoryMock.Setup(x => x.GetSingleTodoAsync(It.IsAny<int>())).ReturnsAsync(foundTodo);
+
+            ActionResult response = await _todosController.UpdateTodo(1, updatedTodo);
+            OkResult parsedResponse = response as OkResult;
+            int actual = parsedResponse.StatusCode;
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public async Task GivenMismatchedIds_ReturnBadRequestStatus()
+        {
+            TodoDTO updatedTodo = new TodoDTO() { TodoId = 90, Title = "Learn to skateboard", IsComplete = false };
+            int expected = 400;
+
+            ActionResult response = await _todosController.UpdateTodo(1, updatedTodo);
+            BadRequestResult parsedResponse = response as BadRequestResult;
+            int actual = parsedResponse.StatusCode;
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public async Task GivenUnusedIds_ReturnNotFoundStatus()
+        {
+            Todo returnValue = null;
+            TodoDTO updatedTodo = new TodoDTO() { TodoId = 1, Title = "Learn to skateboard", IsComplete = false };
+            _todoRepositoryMock.Setup(x => x.GetSingleTodoAsync(It.IsAny<int>())).ReturnsAsync(returnValue);
+            int expected = 404;
+
+            ActionResult response = await _todosController.UpdateTodo(1, updatedTodo);
+            NotFoundResult parsedResponse = response as NotFoundResult;
             int actual = parsedResponse.StatusCode;
 
             Assert.Equal(expected, actual);

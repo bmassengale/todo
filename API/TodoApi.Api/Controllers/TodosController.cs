@@ -75,6 +75,28 @@ namespace TodoApi.Api.Controllers
 
             return NoContent();
         }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult> UpdateTodo(int id, TodoDTO todo)
+        {
+            if (id != todo.TodoId)
+            {
+                return BadRequest();
+            }
+
+            Todo response = await _todoRepository.GetSingleTodoAsync(todo.TodoId);
+
+            if (response == null)
+            {
+                return NotFound();
+            }
+
+            Todo updatedTodo = _mapper.Map<Todo>(todo);
+            _todoRepository.UpdateTodoAsync(updatedTodo);
+            await _todoRepository.SaveAllChangesAsync();
+
+            return Ok();
+        }
     }
 }
  

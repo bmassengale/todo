@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using TodoApi.Core.Entities;
@@ -24,7 +25,9 @@ namespace TodoApi.Infrastructure.Repositories
 
         public async Task<Todo> GetSingleTodoAsync(int id)
         {
-            Todo result = await _context.Todos.FindAsync(id);
+            Todo result = await _context.Todos.Where(x => x.TodoId == id)
+                .AsNoTracking()
+                .FirstOrDefaultAsync();
             return result;
         }
 
@@ -41,9 +44,9 @@ namespace TodoApi.Infrastructure.Repositories
              _context.Remove(todo);
         }
 
-        public async Task<Todo> UpdateTodoAsync()
+        public void UpdateTodoAsync(Todo todo)
         {
-            throw new System.NotImplementedException();
+            _context.Update(todo);
         }
 
         public async Task SaveAllChangesAsync()
