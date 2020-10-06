@@ -23,6 +23,7 @@ namespace TodoApi.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             services.AddAutoMapper(typeof(TodoDTO));
             services.AddDbContext<TodoContext>(options => options.UseNpgsql(Configuration.GetConnectionString("TestDb")));
             services.AddScoped<ITodoRepository, TodoRepository>();
@@ -39,6 +40,10 @@ namespace TodoApi.Api
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(policy => policy.AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
 
             app.UseAuthorization();
 
