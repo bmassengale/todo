@@ -1,0 +1,29 @@
+version: "3.8"
+
+services:
+  database:
+    image: bmassengale/todo-postgres:1.0
+    ports:
+      - target: 5432
+        published: 5432
+    networks:
+      - todo-network
+    container_name: postgres
+    user: postgres
+    volumes:
+      - ./postgresql.conf=/var/lib/postgresql/data/postgresql.conf
+
+    
+  api:
+    image: bmassengale/todo-api:1.0
+    ports:
+      - target: 80
+        published: 8080
+    networks:
+      - todo-network
+    hostname: aspnet-api
+
+
+networks:
+  todo-network:
+    external: true
