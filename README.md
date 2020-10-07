@@ -30,10 +30,16 @@ Docker
 *At this time, the front end is not complete, so data will have to be accessed via the API. In order to do this, you can use Postman, a very common tool used in testing APIs.*
 * In the upper right hand of the web page, click the "Sign Up" button to create an account or sign in if you already have one
 * After logging in, the homepage of the postman site will change to allow the beta feature of running postman in the browser
-* Click the "Laun Postman" button
+* Click the "Launch Postman" button
+
 ![Launch Postman](/readme-images/launchpostman.png)
+
 * In the upper left hand side of the browser, click on the + symbol in the grey box
-![Postman New Request](/readme-images/postman_in_broswer.png)
+
+![Postman New Request](/readme-images/postman_in_browser.png)
+
 * Fill in the request URL and select your request type from the dropdown
+
 ![Request Filled Out](/readme-images/postman_filled.png)
-* Click the blue "Send" button
+
+* Click the blue "Send" buttonz
