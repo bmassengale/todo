@@ -42,4 +42,4 @@ Docker
 
 ![Request Filled Out](/readme-images/postman_filled.png)
 
-* Click the blue "Send" buttonz
+* Click the blue "Send" button
