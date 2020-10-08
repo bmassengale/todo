@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import TodoItem from './TodoItem/TodoItem';
 import './TodoContainer.css';
+import '../../ResponsiveDesign.css';
 
 class TodoContainer extends Component {
   constructor(props) {
