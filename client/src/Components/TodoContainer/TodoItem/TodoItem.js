@@ -10,7 +10,9 @@ class TodoItem extends Component {
   render() {
     return (
         <div className="TodoItem">
-            <h4 >{this.props.individualTodo.title}</h4>
+          <div className="titleContainer">
+            <p>{this.props.individualTodo.title}</p>
+          </div>
         </div>
     );
   }

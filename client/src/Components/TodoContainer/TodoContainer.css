@@ -1,7 +1,27 @@
 .TodoContainer{
   display:flex;
+  justify-content: center;
+  align-items: center;
   flex-direction: column;
-  width: 50%;
-  margin: auto;
-  border: 1px solid red;
+  overflow: auto;
+  background-color: #f0eef1;
+  width: 40%;
+}
+
+@media only screen and (max-width: 1750px) {
+  .TodoContainer {
+    width: 60%;
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  .TodoContainer {
+    width: 80%;
+  }
+}
+
+@media only screen and (max-width: 750px) {
+  .TodoContainer {
+    width: 90%;
+  }
 }
