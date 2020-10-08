@@ -45,9 +45,13 @@ class App extends Component {
 
       return (
         <div className="App">
-          <NewItemForm />
-          <TodoContainer dataSet={unfinishedItems} />
-          <TodoContainer dataSet={completedItems} />
+          <div className="AppContainer">
+            <NewItemForm />
+            <h1>Unfinished:</h1>
+            <TodoContainer dataSet={unfinishedItems} />
+            <h1>Finished:</h1>
+            <TodoContainer dataSet={completedItems} />
+          </div>
         </div>
       );
     }

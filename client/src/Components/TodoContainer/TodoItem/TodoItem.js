@@ -8,9 +8,11 @@ class TodoItem extends Component {
   }
 
   render() {
+    let classList = "titleContainer";
+    if(this.props.individualTodo.iscomplete === false) { classList += " unfinished"; }
     return (
         <div className="TodoItem">
-          <div className="titleContainer">
+          <div className={classList}>
             <p>{this.props.individualTodo.title}</p>
           </div>
         </div>
