@@ -8,13 +8,22 @@ class TodoItem extends Component {
   }
 
   render() {
-    let classList = "titleContainer";
-    if(this.props.individualTodo.iscomplete === false) { classList += " unfinished"; }
+    let containerClassList = "titleContainer";
+    let buttonClassList = "complete"
+    if(this.props.individualTodo.iscomplete === false) { 
+      containerClassList += " unfinished"; 
+    } else {
+      buttonClassList += " hidden";
+    }
+
     return (
         <div className="TodoItem">
-          <div className={classList}>
+          <div className={containerClassList}>
             <p>{this.props.individualTodo.title}</p>
-            <button className="delete" onClick = {() => this.props.clicked(this.props.individualTodo.todoid)}>X</button>
+            <div className="buttonContainer">
+              <button className={buttonClassList} onClick = {() => this.props.handleComplete(this.props.individualTodo)}>O</button>
+              <button className="delete" onClick = {() => this.props.handleRemove(this.props.individualTodo.todoid)}>X</button>
+            </div>
           </div>
         </div>
     );

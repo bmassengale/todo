@@ -16,7 +16,8 @@ class TodoContainer extends Component {
           return (
             <TodoItem individualTodo = {todo}
               key = {todo.todoid} 
-              clicked = {(id) => this.props.clicked(id)}/>
+              handleRemove = {(id) => this.props.handleRemove(id)}
+              handleComplete = { (todoToUpdate) => this.props.handleComplete(todoToUpdate)}/>
           );
         })}
       </div>
