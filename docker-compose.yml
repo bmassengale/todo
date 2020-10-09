@@ -10,8 +10,6 @@ services:
       - todo-network
     container_name: postgres
     user: postgres
-    volumes:
-      - ./postgresql.conf=/var/lib/postgresql/data/postgresql.conf
 
     
   api:
