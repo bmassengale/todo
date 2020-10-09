@@ -19,7 +19,18 @@ services:
         published: 8080
     networks:
       - todo-network
-    hostname: aspnet-api
+    container_name: aspnet-api
+
+
+  client:
+    tty: true
+    image: bmassengale/todo-client:1.0
+    ports:
+      - target: 3000
+        published: 3000
+    networks:
+      - todo-network
+    container_name: react-frontend
 
 
 networks:
