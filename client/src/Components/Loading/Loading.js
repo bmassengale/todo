@@ -10,6 +10,7 @@ class Loading extends Component {
   render() {
     return (
       <div className="Loading">
+        <p>Loading...</p>
       </div>
     );
   }

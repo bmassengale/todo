@@ -31,10 +31,13 @@
   color: rgb(0, 0, 0);
 }
 
-.TodoItem .titleContainer button {
+.TodoItem .titleContainer .buttonContainer {
+  margin-left: auto;
+}
+
+.TodoItem .titleContainer .buttonContainer button {
   font-size: 1.2rem;
   font-weight: bold;
-  margin-left: auto;
   margin-right: 0.3rem;
   width: 2.5rem;
   height: 2.5rem;
@@ -42,6 +45,14 @@
   cursor: pointer;
 }
 
-.TodoItem .titleContainer .delete {
+.delete {
   background-color: #e74c4c;
+}
+
+.complete {
+  background-color: #5ee74c;
+}
+
+.complete.hidden {
+  visibility: hidden;
 }

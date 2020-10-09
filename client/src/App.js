@@ -18,6 +18,7 @@ class App extends Component {
 
     this.postNewTodo = this.postNewTodo.bind(this);
     this.removeTodo = this.removeTodo.bind(this);
+    this.completeTodo = this.completeTodo.bind(this);
   }
 
   componentDidMount() {
@@ -51,9 +52,24 @@ class App extends Component {
     .then(data => console.log(data));
   }
   
-  removeTodo(id, items) {
+  removeTodo(id) {
     fetch('http://localhost:8080/todos/' + id, {
       method: 'DELETE'
+    })
+    .then( () => {
+      this.componentDidMount();
+      }
+    )
+  }
+
+  completeTodo(todoToMarkCompleted) {
+    const newTodo = {todoid: todoToMarkCompleted.todoid, title: todoToMarkCompleted.title, iscomplete: true};
+    fetch('http://localhost:8080/todos/' + todoToMarkCompleted.todoid, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newTodo),
     })
     .then( () => {
       this.componentDidMount();
@@ -75,10 +91,11 @@ class App extends Component {
             <NewItemForm submitEvent={this.postNewTodo}/>
             <h1>Unfinished:</h1>
             <TodoContainer dataSet={unfinishedItems} 
-              clicked={this.removeTodo} />
+              handleRemove={this.removeTodo} 
+              handleComplete={this.completeTodo}/>
             <h1>Finished:</h1>
             <TodoContainer dataSet={completedItems} 
-               clicked={(id) => this.removeTodo(id, items)}/>
+               handleRemove={this.removeTodo}/>
           </div>
         </div>
       );
