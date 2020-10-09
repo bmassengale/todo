@@ -25,9 +25,9 @@ Docker
 * Clone the repository using the following command: `git clone https://github.com/bmassengale/todo.git`
 * Using your terminal or command prompt, navigate into the root directory of the project
 * Run `docker-compose up -d`
+* Type `localhost:3000` into the web browser of your choice
 
-### Accessing the data
-*At this time, the front end is not complete, so data will have to be accessed via the API. In order to do this, you can use Postman, a very common tool used in testing APIs.*
+### Accessing the data without the React front end
 * In the upper right hand of the web page, click the "Sign Up" button to create an account or sign in if you already have one
 * After logging in, the homepage of the postman site will change to allow the beta feature of running postman in the browser
 * Click the "Launch Postman" button
