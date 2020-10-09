@@ -15,6 +15,7 @@ class App extends Component {
       items: [],
       error: null
     };
+    this.postNewTodo = this.postNewTodo.bind(this);
   }
 
   componentDidMount() {
@@ -35,6 +36,20 @@ class App extends Component {
         }
       )
   }
+
+  postNewTodo(userInput) {
+    const newTodo = {title: userInput, iscomplete: false};
+    fetch('http://localhost:8080/todos', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newTodo),
+    })
+    .then(data => console.log(data));
+  }
+  
+
   render() {
     const { items } = this.state;
     if(this.state.error) { return <ErrorFetching message={this.state.error.message} />; }
@@ -46,7 +61,7 @@ class App extends Component {
       return (
         <div className="App">
           <div className="AppContainer">
-            <NewItemForm />
+            <NewItemForm submitEvent={this.postNewTodo}/>
             <h1>Unfinished:</h1>
             <TodoContainer dataSet={unfinishedItems} />
             <h1>Finished:</h1>
