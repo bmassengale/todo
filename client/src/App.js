@@ -15,7 +15,9 @@ class App extends Component {
       items: [],
       error: null
     };
+
     this.postNewTodo = this.postNewTodo.bind(this);
+    this.removeTodo = this.removeTodo.bind(this);
   }
 
   componentDidMount() {
@@ -49,6 +51,15 @@ class App extends Component {
     .then(data => console.log(data));
   }
   
+  removeTodo(id, items) {
+    fetch('http://localhost:8080/todos/' + id, {
+      method: 'DELETE'
+    })
+    .then( () => {
+      this.componentDidMount();
+      }
+    )
+  }
 
   render() {
     const { items } = this.state;
@@ -63,9 +74,11 @@ class App extends Component {
           <div className="AppContainer">
             <NewItemForm submitEvent={this.postNewTodo}/>
             <h1>Unfinished:</h1>
-            <TodoContainer dataSet={unfinishedItems} />
+            <TodoContainer dataSet={unfinishedItems} 
+              clicked={this.removeTodo} />
             <h1>Finished:</h1>
-            <TodoContainer dataSet={completedItems} />
+            <TodoContainer dataSet={completedItems} 
+               clicked={(id) => this.removeTodo(id, items)}/>
           </div>
         </div>
       );

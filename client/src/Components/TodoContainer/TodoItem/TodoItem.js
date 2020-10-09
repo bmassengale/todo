@@ -14,6 +14,7 @@ class TodoItem extends Component {
         <div className="TodoItem">
           <div className={classList}>
             <p>{this.props.individualTodo.title}</p>
+            <button className="delete" onClick = {() => this.props.clicked(this.props.individualTodo.todoid)}>X</button>
           </div>
         </div>
     );

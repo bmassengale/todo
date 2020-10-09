@@ -15,7 +15,8 @@ class TodoContainer extends Component {
         {this.props.dataSet.map( (todo) => { 
           return (
             <TodoItem individualTodo = {todo}
-              key={todo.todoid} />
+              key = {todo.todoid} 
+              clicked = {(id) => this.props.clicked(id)}/>
           );
         })}
       </div>
