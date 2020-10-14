@@ -9,10 +9,10 @@ class TodoItem extends Component {
 
   render() {
     let containerClassList = "titleContainer";
-    let buttonClassList = "complete"
+    let buttonClassList = "completeButton"
     if(this.props.individualTodo.iscomplete === false) { 
       containerClassList += " unfinished"; 
-    } else {
+    } else if(this.props.individualTodo.iscomplete === true) {
       buttonClassList += " hidden";
     }
 
@@ -22,7 +22,7 @@ class TodoItem extends Component {
             <p>{this.props.individualTodo.title}</p>
             <div className="buttonContainer">
               <button className={buttonClassList} onClick = {() => this.props.handleComplete(this.props.individualTodo)}>O</button>
-              <button className="delete" onClick = {() => this.props.handleRemove(this.props.individualTodo.todoid)}>X</button>
+              <button className="deleteButton" onClick = {() => this.props.handleRemove(this.props.individualTodo.todoid)}>X</button>
             </div>
           </div>
         </div>

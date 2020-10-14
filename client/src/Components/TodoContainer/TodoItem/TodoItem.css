@@ -45,14 +45,14 @@
   cursor: pointer;
 }
 
-.delete {
+.deleteButton {
   background-color: #e74c4c;
 }
 
-.complete {
+.completeButton {
   background-color: #5ee74c;
 }
 
-.complete.hidden {
+.completeButton.hidden {
   visibility: hidden;
 }
