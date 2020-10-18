@@ -45,7 +45,6 @@ describe('App', () => {
       }
     );
 
-
     expect(await screen.findByText('Finished:')).toBeTruthy();
   });
 });
