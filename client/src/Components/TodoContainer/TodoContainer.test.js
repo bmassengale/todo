@@ -6,7 +6,7 @@ import TodoContainer from './TodoContainer';
 
 describe('TodoContainer', () => {
   let container = null;
-  let todos = null
+  let todos = null;
 
   beforeEach(() => {
     container = document.createElement("div");
@@ -15,9 +15,8 @@ describe('TodoContainer', () => {
       {todoid: 50, title: "Test this code", iscompleted: false}, 
       {todoid: 51, title: "Also test this", iscompleted: false}, 
       {todoid: 52, title: "Don't test this one", iscompleted: false}
-      ];
-    }
-  );
+    ];
+  });
 
   afterEach(() => {
     unmountComponentAtNode(container);
@@ -30,8 +29,7 @@ describe('TodoContainer', () => {
     render(<TodoContainer dataSet = {todos} />)
 
     expect(document).toBeTruthy();
-    }
-  )
+  });
 
   it('renders the the amount of todos passed down to it', () => {
     render(<TodoContainer dataSet = {todos} />)
@@ -39,16 +37,5 @@ describe('TodoContainer', () => {
     const numberOfTodoItems = TodoItems.length;
 
     expect(numberOfTodoItems).toEqual(todos.length);
-    }
-  )
-
-
-
-
-
-
-
-
-
-  }
-);
+  })
+});
