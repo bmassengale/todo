@@ -26,6 +26,7 @@ class App extends Component {
       .then(res => res.json())
       .then(
         (result) => {
+          console.log(result);
           this.setState({
             isLoaded: true,
             items: result
@@ -39,6 +40,10 @@ class App extends Component {
         }
       )
   }
+
+
+  componentWillUnmount = () => {
+  };
 
   postNewTodo(userInput) {
     const newTodo = {title: userInput, iscomplete: false};

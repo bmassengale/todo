@@ -1,6 +1,7 @@
 import React from "react";
 import { unmountComponentAtNode } from "react-dom";
 import { render, screen, fireEvent } from '@testing-library/react';
+import '@testing-library/jest-dom';
 
 import TodoItem from "./TodoItem";
 
