@@ -12,6 +12,9 @@ class NewItemForm extends Component {
   }
 
   parseTodoName(event) {
+    if (event.target.value === null){
+      return;
+    }
     this.setState({ newTodo: event.target.value});
   }
 
@@ -20,8 +23,7 @@ class NewItemForm extends Component {
         <div className="NewItemForm">
           <h3>Manage Todos</h3>
           <form onSubmit={() => this.props.submitEvent(this.state.newTodo)}>
-            <input type="text"
-              onChange={(input) => this.parseTodoName(input)}/>
+            <input type="text"  onChange={(input) => this.parseTodoName(input)}/>
             <input type="submit" value="Add Todo"/>
           </form>
         </div>
