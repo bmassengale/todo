@@ -1,10 +1,10 @@
 import {rest} from 'msw' 
 
 const todoArray = [
-  {todoid: 50, title: "Test this code", iscompleted: false}, 
-  {todoid: 51, title: "Also test this", iscompleted: false}, 
-  {todoid: 52, title: "Don't test this one", iscompleted: false},
-  {todoid: 53, title: "Do something", iscompleted: true}
+  {todoid: 50, title: "Test this code", iscomplete: false}, 
+  {todoid: 51, title: "Also test this", iscomplete: false}, 
+  {todoid: 52, title: "Don't test this one", iscomplete: false},
+  {todoid: 53, title: "Do something", iscomplete: true}
 ];
 
 const handlers = [

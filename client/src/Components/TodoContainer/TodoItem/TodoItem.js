@@ -10,6 +10,9 @@ class TodoItem extends Component {
   render() {
     let containerClassList = "titleContainer";
     let buttonClassList = "completeButton"
+    if(this.props.individualTodo === null) {
+      return null;
+    }
     if(this.props.individualTodo.iscomplete === false) { 
       containerClassList += " unfinished"; 
     } else if(this.props.individualTodo.iscomplete === true) {
