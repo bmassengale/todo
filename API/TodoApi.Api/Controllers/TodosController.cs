@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using TodoApi.Core.Entities;
 using TodoApi.Core.Interfaces;
 using TodoApi.Api.DTOs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TodoApi.Api.Controllers
 {
