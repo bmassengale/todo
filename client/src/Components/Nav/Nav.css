@@ -1,0 +1,49 @@
+.Nav {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 3rem;
+  justify-content: space-between;
+  background-color: #d8d8d8;
+  margin-bottom: 0.5rem;
+}
+
+.Nav button {
+  padding: 0.5rem;
+  height: 100%;
+  border: none;
+  cursor: pointer;
+  background-color: #d8d8d8;
+}
+
+.Nav button:hover {
+  background-color: #c9c8c8;
+}
+
+.Nav .HomeButton {
+  margin-left: 0.5rem;
+  height: 100%;
+}
+
+.rightJustifyButtons {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+}
+
+.rightJustifyButtons .userInfo {
+  display: flex;
+  flex-direction: row;
+}
+
+.rightJustifyButtons .userInfo h3 {
+  align-self: center;
+  margin-right: 0.2rem;
+  font-size: 0.8rem;
+}
+
+@media only screen and (max-width: 500px) {
+  .Nav .userInfo h3 {
+    display: none; 
+  }
+}

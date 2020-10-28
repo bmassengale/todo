@@ -1,24 +1,22 @@
 import React, { Component } from 'react';
 import './App.css';
-
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import AppContainer from './Components/AppContainer/AppContainer';
+import Home from './Components/Home/Home';
+import Nav from './Components/Nav/Nav';
 
 class App extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-      isAuthenticatied: false
-    }
-  }
-
   render() {
-    let componentToDisplay = (this.state.isAuthenticatied) ? <AppContainer /> : null //LoginArea
-
     return (
-      <div className="App">
-        {componentToDisplay}
-      </div>
+      <Router>
+        <div className="App">
+          <Nav />
+          <Switch>
+           <Route path="/" exact component={Home} />
+           <Route path="/todolist" component={AppContainer} />
+          </Switch>
+        </div>
+      </Router>
     );
   }
 }
