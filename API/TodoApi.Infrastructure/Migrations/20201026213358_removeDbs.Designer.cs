@@ -9,8 +9,8 @@ using TodoApi.Infrastructure.Contexts;
 namespace TodoApi.Infrastructure.Migrations
 {
     [DbContext(typeof(TodoContext))]
-    [Migration("20201001224139_StatusBooleanAdded")]
-    partial class StatusBooleanAdded
+    [Migration("20201026213358_removeDbs")]
+    partial class removeDbs
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -22,20 +22,23 @@ namespace TodoApi.Infrastructure.Migrations
 
             modelBuilder.Entity("TodoApi.Core.Entities.Todo", b =>
                 {
-                    b.Property<int>("TodoId")
+                    b.Property<int>("todoid")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("isComplete")
+                    b.Property<bool>("iscomplete")
                         .HasColumnType("bit");
 
-                    b.HasKey("TodoId");
+                    b.Property<string>("something")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.ToTable("Todos");
+                    b.Property<string>("title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("todoid");
+
+                    b.ToTable("todos");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,7 +1,6 @@
 import React from "react";
 import { unmountComponentAtNode } from "react-dom";
 import { render, screen, cleanup } from '@testing-library/react';
-import { act } from "react-dom/test-utils";
 
 import App from './App';
 
@@ -20,31 +19,23 @@ describe('App', () => {
     cleanup();
   });
 
-  it('can render on the page', async () => {
-    await act(async () => {
-      await render(<App />)
-       }
-     );
+  it('can render on the page', () => {
+    render(<App />);
 
     expect(document).toBeTruthy();
   });
 
-  it('can make an API GET request on startup', async () => {
-    const fetchSpy = jest.spyOn(window, 'fetch');
-    await act(async () => {
-      await render(<App />)
-       }
-     );
+  // it('will render null if user is not is authenticated', () => {
+  //   render(<App />);
+  //   const displayedComponent = screen.queryByText('Loading...');
+    
+  //   expect(displayedComponent).toEqual(null);
+  // });
 
-    expect(fetchSpy).toHaveBeenCalledTimes(1);
-  });
-
-  it('can render child components after startup', async () => {
-    act(() => {
-     render(<App />)
-      }
-    );
-
-    expect(await screen.findByText('Finished:')).toBeTruthy();
-  });
+  // it('will render the todoContainer if user is authenticated', () => {
+  //   render(<App isAuthentication={true}/>);
+  //   const displayedComponent = screen.getByText('Loading...');
+    
+  //   expect(displayedComponent).toBeFalsy();
+  // });
 });

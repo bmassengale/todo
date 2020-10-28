@@ -20,23 +20,23 @@ namespace TodoApi.Infrastructure.Migrations
 
             modelBuilder.Entity("TodoApi.Core.Entities.Todo", b =>
                 {
-                    b.Property<int>("TodoId")
+                    b.Property<int>("todoid")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool>("IsComplete")
+                    b.Property<bool>("iscomplete")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Something")
+                    b.Property<string>("something")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Title")
+                    b.Property<string>("title")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("TodoId");
+                    b.HasKey("todoid");
 
-                    b.ToTable("Todos");
+                    b.ToTable("todos");
                 });
 #pragma warning restore 612, 618
         }

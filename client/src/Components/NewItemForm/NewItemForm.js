@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './NewItemForm.css';
-import '../../ResponsiveDesign.css';
 
 class NewItemForm extends Component {
   constructor() {
