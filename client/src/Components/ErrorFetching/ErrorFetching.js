@@ -10,7 +10,7 @@ class ErrorFetching extends Component {
   render() {
     return (
       <div className="Error">
-        <p>Error</p>
+        <p>Error {this.props.message}</p>
       </div>
     );
   }

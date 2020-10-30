@@ -23,6 +23,7 @@ namespace TodoApi.Api.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<TodoDTO[]>> GetAllTodos()
         {
             Todo[] response = await _todoRepository.GetAllTodosAsync();
@@ -32,6 +33,7 @@ namespace TodoApi.Api.Controllers
             return Ok(result);
         }
 
+        
         [HttpGet("{id}")]
         public async Task<ActionResult<TodoDTO>> GetTodo(int id)
         {

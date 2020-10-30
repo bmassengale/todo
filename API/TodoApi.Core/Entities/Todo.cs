@@ -7,5 +7,6 @@
         public bool iscomplete { get; set; }
         // This is just here so that I can verify AutoMapper is working.
         public string something { get; set; }
+        public string user { get; set; }
     }
 }

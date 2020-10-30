@@ -22,10 +22,21 @@ class AppContainer extends Component {
   }
 
   componentDidMount() {
-    fetch("http://localhost:8080/todos")
+    // let token;
+    // (async () => {8 
+    //   token = await getAccessTokenSilently({
+    //     audience: 'http://localhost',
+    //     scope: 'read:todo',
+    //   })});
+    fetch("http://localhost:5000/todos",{
+      headers: {
+        Authorization: `Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlQxNHFrQkE2N2xseEFldF9FTm0weCJ9.eyJpc3MiOiJodHRwczovL2Rldi03YTc2Y3R5cy51cy5hdXRoMC5jb20vIiwic3ViIjoiZ29vZ2xlLW9hdXRoMnwxMTQyMTkyMTQ2MTExMDYwMDU3MDQiLCJhdWQiOlsiaHR0cDovL2xvY2FsaG9zdCIsImh0dHBzOi8vZGV2LTdhNzZjdHlzLnVzLmF1dGgwLmNvbS91c2VyaW5mbyJdLCJpYXQiOjE2MDQwNjUxNjgsImV4cCI6MTYwNDE1MTU2OCwiYXpwIjoiQnFrN3VPZWdyNG1qeXRBamNzcm9IemlZdHRFUDFXSnYiLCJzY29wZSI6Im9wZW5pZCBwcm9maWxlIGVtYWlsIHJlYWQ6dG9kbyJ9.tyohesVB5cvaBRo0twcxeL6x7eBIPhRUtuJKTz5Tabov39zi9VsdP9daSeKvwOskT0WK29qjFC9WYG1If4ky-VETibt1CGeD6i79tiMEWXknp-YrP5YLKEx4nL8iD6Wft1PDugQQszFMQasdWuAruIwWrwoxEOX44cQjKNCXcIb7OiU2jM4m060XcydU93Xz5H_0zGmLRmMLFWfdB3VC-_zVW8HkkJAgGHu1gzo0pzPITksUjoKsEWn6ASUjafs8MO8ae0_Pz3RaQU4p62WCPANef8aZ_XzwjVbqO4lpCsLsp6JtOrfa1c_lLAiCqPpTU7LJouhRgD0Sj60zQkLwhQ`
+      }
+    })
       .then(res => res.json())
       .then(
         (result) => {
+          console.log(localStorage.getItem('user_token'));
           this.setState({
             isLoaded: true,
             items: result
