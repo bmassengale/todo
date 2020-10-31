@@ -35,6 +35,7 @@ namespace TodoApi.Api.Controllers
 
         
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<ActionResult<TodoDTO>> GetTodo(int id)
         {
             Todo response = await _todoRepository.GetSingleTodoAsync(id);
@@ -50,6 +51,7 @@ namespace TodoApi.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<TodoDTO>> CreateTodo(TodoDTO todo)
         {
             Todo newTodo = _mapper.Map<Todo>(todo);
@@ -64,6 +66,7 @@ namespace TodoApi.Api.Controllers
         }
         
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<ActionResult> DeleteTodo(int id)
         {
             Todo todoToDelete = await _todoRepository.GetSingleTodoAsync(id);
@@ -80,6 +83,7 @@ namespace TodoApi.Api.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<ActionResult> UpdateTodo(int id, TodoDTO todo)
         {
             if (id != todo.todoid)
