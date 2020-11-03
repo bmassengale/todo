@@ -1,0 +1,6 @@
+.Login {
+  background-color: #f0eef1;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}

@@ -19,7 +19,7 @@ class NewItemForm extends Component {
 
   render() {
     return (
-        <div className="NewItemForm">
+        <div className="NewItemForm" method="POST" target="_blank">
           <h3>Manage Todos</h3>
           <form onSubmit={() => this.props.submitEvent(this.state.newTodo)}>
             <input type="text"  onChange={(input) => this.parseTodoName(input)}/>

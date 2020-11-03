@@ -17,36 +17,38 @@ function AppContainer() {
   useEffect(()=>{
     (async () => {
        await getTodos();
-      console.log("Component Loaded");
     })()
   },([]));
 
   
   const getTodos = (async () => {
     try {
+      console.log(user);
       token.current = await getAccessTokenSilently();
        var url = new URL(`https://localhost:44310/todos?username=${user.email}`);
-
+  
       const response = await fetch(url, {
         headers: {
           'Authorization': `Bearer ${token.current}`,
           'Content-Type': 'application/json',
         }
       });
-      setItems(await response.json());
-      setIsLoaded(true);
+      console.log("Get user")
+      await setItems(await response.json());
+      console.log("SetItems called, should have rerendered")
+      await setIsLoaded(true);
     } 
     catch (error) {
       console.error(error);
-      setError(error);
-      setIsLoaded(true);
+      await setError(error);
+      await setIsLoaded(true);
     }
     }
   );
 
   const postNewTodo = async (userInput) => {
     const newTodo = {title: userInput, iscomplete: false, user: user.email};
-    await fetch('https://localhost:44310/todos/', {
+    await fetch('https://localhost:44310/todos', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -54,7 +56,7 @@ function AppContainer() {
       },
       body: JSON.stringify(newTodo),
     })
-    .then(await getTodos());
+    await getTodos();
   }
   
   const removeTodo = async (id) => {
@@ -64,11 +66,12 @@ function AppContainer() {
         'Authorization': `Bearer ${token.current}`
       },
     })
-    .then(await getTodos());
+    await getTodos();
   }
 
   const completeTodo = async (todoToMarkCompleted) => {
     const newTodo = {todoid: todoToMarkCompleted.todoid, title: todoToMarkCompleted.title, iscomplete: true, user: user.email};
+    console.log("marking todo complete...");
     await fetch('https://localhost:44310/todos/' + todoToMarkCompleted.todoid, {
       method: 'PUT',
       headers: {
@@ -77,7 +80,8 @@ function AppContainer() {
       },
       body: JSON.stringify(newTodo),
     })
-    .then(await getTodos());
+    console.log("PUT finished. Running getTodos");
+    await getTodos();
   }
 
   if(error) { return <ErrorFetching message={error.message} />; }
