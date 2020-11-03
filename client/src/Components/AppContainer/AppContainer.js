@@ -1,4 +1,3 @@
-//import React, { Component } from 'react';
 import React, { useState, useEffect, useRef } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import './AppContainer.css';
@@ -14,19 +13,24 @@ function AppContainer() {
   const [items,setItems] = useState([]);
   const [error,setError] = useState(null);
   let token = useRef("");
-
+  
   useEffect(()=>{
     (async () => {
-      token.current = await getAccessTokenSilently();
-      await getTodos();
-    })();
-  });
+       await getTodos();
+      console.log("Component Loaded");
+    })()
+  },([]));
 
-  const getTodos = async () => {
+  
+  const getTodos = (async () => {
     try {
-      const response = await fetch('https://localhost:44310/todos/', {
+      token.current = await getAccessTokenSilently();
+       var url = new URL(`https://localhost:44310/todos?username=${user.email}`);
+
+      const response = await fetch(url, {
         headers: {
-          'Authorization': `Bearer ${token.current}`
+          'Authorization': `Bearer ${token.current}`,
+          'Content-Type': 'application/json',
         }
       });
       setItems(await response.json());
@@ -37,11 +41,12 @@ function AppContainer() {
       setError(error);
       setIsLoaded(true);
     }
-  };
+    }
+  );
 
-  const postNewTodo = (userInput) => {
+  const postNewTodo = async (userInput) => {
     const newTodo = {title: userInput, iscomplete: false, user: user.email};
-    fetch('https://localhost:44310/todos', {
+    await fetch('https://localhost:44310/todos/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -49,22 +54,22 @@ function AppContainer() {
       },
       body: JSON.stringify(newTodo),
     })
-    .then(getTodos());
+    .then(await getTodos());
   }
   
-  const removeTodo = (id) => {
-    fetch('https://localhost:44310/todos/' + id, {
+  const removeTodo = async (id) => {
+    await fetch('https://localhost:44310/todos/' + id, {
       method: 'DELETE',
       headers: {
         'Authorization': `Bearer ${token.current}`
       },
     })
-    .then(getTodos());
+    .then(await getTodos());
   }
 
-  const completeTodo = (todoToMarkCompleted) => {
+  const completeTodo = async (todoToMarkCompleted) => {
     const newTodo = {todoid: todoToMarkCompleted.todoid, title: todoToMarkCompleted.title, iscomplete: true, user: user.email};
-    fetch('https://localhost:44310/todos/' + todoToMarkCompleted.todoid, {
+    await fetch('https://localhost:44310/todos/' + todoToMarkCompleted.todoid, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -72,7 +77,7 @@ function AppContainer() {
       },
       body: JSON.stringify(newTodo),
     })
-    .then(getTodos());
+    .then(await getTodos());
   }
 
   if(error) { return <ErrorFetching message={error.message} />; }

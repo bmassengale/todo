@@ -5,7 +5,7 @@ namespace TodoApi.Core.Interfaces
 {
     public interface ITodoRepository
     {
-        Task<Todo[]> GetAllTodosAsync();
+        Task<Todo[]> GetAllTodosAsync(string username);
         Task<Todo> GetSingleTodoAsync(int id);
         void UpdateTodoAsync(Todo todo);
         Task<Todo> CreateTodoAsync(Todo todo);

@@ -17,9 +17,9 @@ namespace TodoApi.Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task<Todo[]> GetAllTodosAsync()
+        public async Task<Todo[]> GetAllTodosAsync(string username)
         {
-            Todo[] result = await _context.todos.ToArrayAsync();
+            Todo[] result = await _context.todos.Where(todo => todo.user.Equals(username)).ToArrayAsync();
             return result;
         }
 

@@ -24,9 +24,9 @@ namespace TodoApi.Api.Controllers
 
         [HttpGet]
         [Authorize]
-        public async Task<ActionResult<TodoDTO[]>> GetAllTodos()
+        public async Task<ActionResult<TodoDTO[]>> GetAllTodos([FromQuery] string username)
         {
-            Todo[] response = await _todoRepository.GetAllTodosAsync();
+            Todo[] response = await _todoRepository.GetAllTodosAsync(username);
 
             TodoDTO[] result = _mapper.Map<TodoDTO[]>(response);
 
