@@ -8,7 +8,7 @@ const Nav = () => {
   let buttonArea;
   if (!isAuthenticated) {
     buttonArea = <div className="userInfo">
-                    <button onClick={ () => loginWithRedirect()}> Log In </button>
+                    <button onClick={ () => loginWithRedirect({redirect_uri:"http://localhost:3000/todolist/"})}> Log In </button>
                   </div>;
   } 
   else if (isAuthenticated) {
@@ -29,7 +29,6 @@ const Nav = () => {
           <Link to="/todolist"><button>View Todo List</button></Link>
         </div>
       </div>
-
     </div>
   );
 };

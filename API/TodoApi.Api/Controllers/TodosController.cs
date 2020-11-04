@@ -13,7 +13,7 @@ namespace TodoApi.Api.Controllers
     public class TodosController : ControllerBase
     {
         private readonly ITodoRepository _todoRepository;
-        private readonly IMapper _mapper;
+        private readonly IMapper _mapper ;
 
         public TodosController(ITodoRepository todoRepository, IMapper mapper)
         {

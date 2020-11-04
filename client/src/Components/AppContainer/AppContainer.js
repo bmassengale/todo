@@ -9,6 +9,7 @@ import Loading from '../Loading/Loading';
 
 function AppContainer() {
   const { getAccessTokenSilently, user } = useAuth0();
+  
   const [isLoaded,setIsLoaded] = useState(false);
   const [items,setItems] = useState([]);
   const [error,setError] = useState(null);
@@ -16,26 +17,22 @@ function AppContainer() {
   
   useEffect(()=>{
     (async () => {
+      token.current = await getAccessTokenSilently();
        await getTodos();
     })()
   },([]));
 
   
   const getTodos = (async () => {
-    try {
-      console.log(user);
-      token.current = await getAccessTokenSilently();
-       var url = new URL(`https://localhost:44310/todos?username=${user.email}`);
-  
+    try { 
+      var url = await new URL(`https://localhost:44310/todos?username=${user.email}`);
       const response = await fetch(url, {
         headers: {
           'Authorization': `Bearer ${token.current}`,
           'Content-Type': 'application/json',
         }
       });
-      console.log("Get user")
       await setItems(await response.json());
-      console.log("SetItems called, should have rerendered")
       await setIsLoaded(true);
     } 
     catch (error) {
@@ -46,7 +43,8 @@ function AppContainer() {
     }
   );
 
-  const postNewTodo = async (userInput) => {
+  const postNewTodo = async (event,userInput) => {
+    event.preventDefault();
     const newTodo = {title: userInput, iscomplete: false, user: user.email};
     await fetch('https://localhost:44310/todos', {
       method: 'POST',
@@ -71,7 +69,6 @@ function AppContainer() {
 
   const completeTodo = async (todoToMarkCompleted) => {
     const newTodo = {todoid: todoToMarkCompleted.todoid, title: todoToMarkCompleted.title, iscomplete: true, user: user.email};
-    console.log("marking todo complete...");
     await fetch('https://localhost:44310/todos/' + todoToMarkCompleted.todoid, {
       method: 'PUT',
       headers: {
@@ -80,7 +77,6 @@ function AppContainer() {
       },
       body: JSON.stringify(newTodo),
     })
-    console.log("PUT finished. Running getTodos");
     await getTodos();
   }
 
