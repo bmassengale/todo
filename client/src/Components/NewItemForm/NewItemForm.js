@@ -6,7 +6,7 @@ class NewItemForm extends Component {
     super();
 
     this.state = {
-      newTodo: null
+      newTodo: ""
     }
   }
 

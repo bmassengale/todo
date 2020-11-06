@@ -8,23 +8,25 @@ import ErrorFetching from '../ErrorFetching/ErrorFetching'
 import Loading from '../Loading/Loading';
 
 function AppContainer() {
-  const { getAccessTokenSilently, user } = useAuth0();
+  const { getAccessTokenSilently, user, isAuthenticated, isLoading } = useAuth0();
   
   const [isLoaded,setIsLoaded] = useState(false);
   const [items,setItems] = useState([]);
   const [error,setError] = useState(null);
   let token = useRef("");
-  
+
   useEffect(()=>{
     (async () => {
       token.current = await getAccessTokenSilently();
-       await getTodos();
+      if(!isLoading) {
+        await getTodos();
+      }
     })()
-  },([]));
+  },([isLoaded, getAccessTokenSilently]));
 
   
   const getTodos = (async () => {
-    try { 
+    try {
       var url = await new URL(`https://localhost:44310/todos?username=${user.email}`);
       const response = await fetch(url, {
         headers: {
@@ -87,18 +89,18 @@ function AppContainer() {
       const unfinishedItems = items.filter(todo => todo.iscomplete === false);
 
       return (
-        <div className="AppContainer">
-          <div className="Container">
-            <NewItemForm submitEvent={postNewTodo}/>
-            <h1>Unfinished:</h1>
-            <TodoContainer dataSet={unfinishedItems} 
-              handleRemove={removeTodo} 
-              handleComplete={completeTodo}/>
-            <h1>Finished:</h1>
-            <TodoContainer dataSet={completedItems} 
-               handleRemove={removeTodo}/>
+          <div className="AppContainer">
+            <div className="Container">
+              <NewItemForm submitEvent={postNewTodo}/>
+              <h1>Unfinished:</h1>
+              <TodoContainer dataSet={unfinishedItems} 
+                handleRemove={removeTodo} 
+                handleComplete={completeTodo}/>
+              <h1>Finished:</h1>
+              <TodoContainer dataSet={completedItems} 
+                handleRemove={removeTodo}/>
+            </div>
           </div>
-        </div>
       );
   }
 }
