@@ -10,7 +10,7 @@ ReactDOM.render(
     <Auth0Provider
       domain="dev-7a76ctys.us.auth0.com"
       clientId="Bqk7uOegr4mjytAjcsroHziYttEP1WJv"
-      redirectUri="http://localhost:3000/todolist/"
+      redirectUri="http://localhost:3000/todolist"
       audience="http://localhost"
       scope="read:todo" >
         <App />

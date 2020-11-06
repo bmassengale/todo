@@ -8,34 +8,33 @@ import ErrorFetching from '../ErrorFetching/ErrorFetching'
 import Loading from '../Loading/Loading';
 
 function AppContainer() {
-  const { getAccessTokenSilently, user } = useAuth0();
+  const { getAccessTokenSilently, user, isAuthenticated, isLoading } = useAuth0();
+  
   const [isLoaded,setIsLoaded] = useState(false);
   const [items,setItems] = useState([]);
   const [error,setError] = useState(null);
   let token = useRef("");
-  
+
   useEffect(()=>{
     (async () => {
-       await getTodos();
+      token.current = await getAccessTokenSilently();
+      if(!isLoading) {
+        await getTodos();
+      }
     })()
-  },([]));
+  },([isLoaded, getAccessTokenSilently]));
 
   
   const getTodos = (async () => {
     try {
-      console.log(user);
-      token.current = await getAccessTokenSilently();
-       var url = new URL(`https://localhost:44310/todos?username=${user.email}`);
-  
+      var url = await new URL(`https://localhost:44310/todos?username=${user.email}`);
       const response = await fetch(url, {
         headers: {
           'Authorization': `Bearer ${token.current}`,
           'Content-Type': 'application/json',
         }
       });
-      console.log("Get user")
       await setItems(await response.json());
-      console.log("SetItems called, should have rerendered")
       await setIsLoaded(true);
     } 
     catch (error) {
@@ -46,7 +45,8 @@ function AppContainer() {
     }
   );
 
-  const postNewTodo = async (userInput) => {
+  const postNewTodo = async (event,userInput) => {
+    event.preventDefault();
     const newTodo = {title: userInput, iscomplete: false, user: user.email};
     await fetch('https://localhost:44310/todos', {
       method: 'POST',
@@ -71,7 +71,6 @@ function AppContainer() {
 
   const completeTodo = async (todoToMarkCompleted) => {
     const newTodo = {todoid: todoToMarkCompleted.todoid, title: todoToMarkCompleted.title, iscomplete: true, user: user.email};
-    console.log("marking todo complete...");
     await fetch('https://localhost:44310/todos/' + todoToMarkCompleted.todoid, {
       method: 'PUT',
       headers: {
@@ -80,7 +79,6 @@ function AppContainer() {
       },
       body: JSON.stringify(newTodo),
     })
-    console.log("PUT finished. Running getTodos");
     await getTodos();
   }
 
@@ -91,18 +89,18 @@ function AppContainer() {
       const unfinishedItems = items.filter(todo => todo.iscomplete === false);
 
       return (
-        <div className="AppContainer">
-          <div className="Container">
-            <NewItemForm submitEvent={postNewTodo}/>
-            <h1>Unfinished:</h1>
-            <TodoContainer dataSet={unfinishedItems} 
-              handleRemove={removeTodo} 
-              handleComplete={completeTodo}/>
-            <h1>Finished:</h1>
-            <TodoContainer dataSet={completedItems} 
-               handleRemove={removeTodo}/>
+          <div className="AppContainer">
+            <div className="Container">
+              <NewItemForm submitEvent={postNewTodo}/>
+              <h1>Unfinished:</h1>
+              <TodoContainer dataSet={unfinishedItems} 
+                handleRemove={removeTodo} 
+                handleComplete={completeTodo}/>
+              <h1>Finished:</h1>
+              <TodoContainer dataSet={completedItems} 
+                handleRemove={removeTodo}/>
+            </div>
           </div>
-        </div>
       );
   }
 }

@@ -15,7 +15,6 @@ class App extends Component {
           <Nav />
           <Switch>
            <Route path="/" exact component={Home} />
-           
            <Route path="/todolist" component={AppContainer} />
           </Switch>
         </div>
@@ -23,5 +22,6 @@ class App extends Component {
     );
   }
 }
-//<Route path="/login" component={Login} />
+
 export default App;
+ 
