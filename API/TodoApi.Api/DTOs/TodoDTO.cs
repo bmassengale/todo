@@ -11,6 +11,6 @@ namespace TodoApi.Api.DTOs
         [DefaultValue(false)]
         public bool iscomplete { get; set; }
         [Required]
-        public string user { get; set; }
+        public string username { get; set; }
     }
 }

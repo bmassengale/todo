@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   database:
-    image: bmassengale/todo-postgres:1.0
+    image: bmassengale/todo-postgres:2.0
     ports:
       - target: 5432
         published: 5432
@@ -13,7 +13,7 @@ services:
 
     
   api:
-    image: bmassengale/todo-api:1.0
+    image: bmassengale/todo-api:2.0
     ports:
       - target: 80
         published: 8080
@@ -24,7 +24,7 @@ services:
 
   client:
     tty: true
-    image: bmassengale/todo-client:1.0
+    image: bmassengale/todo-client:2.0
     ports:
       - target: 3000
         published: 3000
