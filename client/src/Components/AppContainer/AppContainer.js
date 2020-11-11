@@ -8,7 +8,7 @@ import ErrorFetching from '../ErrorFetching/ErrorFetching'
 import Loading from '../Loading/Loading';
 
 function AppContainer() {
-  const { getAccessTokenSilently, user, isAuthenticated, isLoading } = useAuth0();
+  const { getAccessTokenSilently, user, isLoading } = useAuth0();
   
   const [isLoaded,setIsLoaded] = useState(false);
   const [items,setItems] = useState([]);

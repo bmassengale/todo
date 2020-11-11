@@ -22,13 +22,13 @@ describe('NavBar', () => {
     cleanup();
   });
 
-  it('will change URL when button to view todo list is clicked', async () => {
+  it('will change reroute to different page when button to view todo list is clicked and user is not logged in', async () => {
     render(<App />)
     const logoutButton = screen.getByText('View Todo List');
 
     await userEvent.click(logoutButton);
     let currentURL = window.location.pathname;
 
-    expect(currentURL).toEqual('/todolist');
+    expect(currentURL).toEqual('/login');
   });
 });
