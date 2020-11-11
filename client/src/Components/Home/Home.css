@@ -4,3 +4,8 @@
   flex-direction: column;
   height: 100vh;
 }
+
+.Home img {
+  width: 100%;
+  height: auto;
+}
