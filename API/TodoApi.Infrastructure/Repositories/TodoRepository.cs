@@ -19,7 +19,7 @@ namespace TodoApi.Infrastructure.Repositories
 
         public async Task<Todo[]> GetAllTodosAsync(string username)
         {
-            Todo[] result = await _context.todos.Where(todo => todo.user.Equals(username)).ToArrayAsync();
+            Todo[] result = await _context.todos.Where(todo => todo.username.Equals(username)).ToArrayAsync();
             return result;
         }
 

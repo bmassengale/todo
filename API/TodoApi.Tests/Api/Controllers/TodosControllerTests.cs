@@ -41,9 +41,9 @@ namespace TodoApi.Tests.Api.Controllers
                 new TodoDTO() { todoid = 2, title = "Then this", iscomplete = true },
                 new TodoDTO() { todoid = 3, title = "And maybe this", iscomplete = false }
             };
-            _todoRepositoryMock.Setup(x => x.GetAllTodosAsync()).ReturnsAsync(allTodos);
+            _todoRepositoryMock.Setup(x => x.GetAllTodosAsync("Test")).ReturnsAsync(allTodos);
 
-            ActionResult<TodoDTO[]> response = await _todosController.GetAllTodos();
+            ActionResult<TodoDTO[]> response = await _todosController.GetAllTodos("Test");
             OkObjectResult parsedResponse = response.Result as OkObjectResult;
             TodoDTO[] actual = parsedResponse.Value as TodoDTO[];
 

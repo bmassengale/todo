@@ -30,8 +30,7 @@ namespace TodoApi.Api
         {
             services.AddCors();
             services.AddAutoMapper(typeof(TodoDTO));
-            //services.AddDbContext<TodoContext>(options => options.UseNpgsql(Configuration.GetConnectionString("postgres")));
-            services.AddDbContext<TodoContext>(options => options.UseSqlServer(Configuration.GetConnectionString("sqlserver")));
+            services.AddDbContext<TodoContext>(options => options.UseNpgsql(Configuration.GetConnectionString("DockerDB")));
             services.AddScoped<ITodoRepository, TodoRepository>();
             services.AddControllers();
 

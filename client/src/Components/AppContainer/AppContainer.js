@@ -27,7 +27,7 @@ function AppContainer() {
   
   const getTodos = (async () => {
     try {
-      var url = await new URL(`https://localhost:44310/todos?username=${user.email}`);
+      var url = await new URL(`http://localhost:8080/todos?username=${user.email}`);
       const response = await fetch(url, {
         headers: {
           'Authorization': `Bearer ${token.current}`,
@@ -47,8 +47,9 @@ function AppContainer() {
 
   const postNewTodo = async (event,userInput) => {
     event.preventDefault();
-    const newTodo = {title: userInput, iscomplete: false, user: user.email};
-    await fetch('https://localhost:44310/todos', {
+    const newTodo = {title: userInput, iscomplete: false, username: user.email};
+    console.log(newTodo);
+    await fetch('http://localhost:8080/todos', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -60,7 +61,7 @@ function AppContainer() {
   }
   
   const removeTodo = async (id) => {
-    await fetch('https://localhost:44310/todos/' + id, {
+    await fetch('http://localhost:8080/todos/' + id, {
       method: 'DELETE',
       headers: {
         'Authorization': `Bearer ${token.current}`
@@ -70,8 +71,8 @@ function AppContainer() {
   }
 
   const completeTodo = async (todoToMarkCompleted) => {
-    const newTodo = {todoid: todoToMarkCompleted.todoid, title: todoToMarkCompleted.title, iscomplete: true, user: user.email};
-    await fetch('https://localhost:44310/todos/' + todoToMarkCompleted.todoid, {
+    const newTodo = {todoid: todoToMarkCompleted.todoid, title: todoToMarkCompleted.title, iscomplete: true, username: user.email};
+    await fetch('http://localhost:8080/todos/' + todoToMarkCompleted.todoid, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
