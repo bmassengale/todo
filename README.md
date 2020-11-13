@@ -14,7 +14,7 @@ AWS ECS
 
 ### Run the applciation using your we browser
 
-### Run the applciation locally
+### Run the applciation locally (Development code)
 * Download [Docker](https://www.docker.com/products/docker-desktop) for your specific operating system.
 * Download [Docker-Compose](https://docs.docker.com/compose/install/) for your operating system
 * Clone the repository using the following command: `git clone https://github.com/bmassengale/todo.git`
