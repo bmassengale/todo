@@ -3,21 +3,16 @@ The purpose of this application is to practice unit testing skills, react, docke
 
 ### Technology Stack
 Asp.Net Core 3.1
+
 React
+
 PostgreSQL
+
 Docker
 
-### Supported HTTP Requests
-* GET
-  * http://localhost:8080/todos/
-  * Get specific todo 
-    * http://localhost:8080/todos/#
-* POST - *Requires TodoDTO object in request body*
-  * http://localhost:8080/todos/
-* PUT *Requires TodoDTO object in request body and matching ID in URL*
-  * http://localhost:8080/todos/#
-* DELETE
-  * http://localhost:8080/todos/#
+AWS ECS
+
+### Run the applciation using your we browser
 
 ### Run the applciation locally
 * Download [Docker](https://www.docker.com/products/docker-desktop) for your specific operating system.
