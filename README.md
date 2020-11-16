@@ -2,17 +2,18 @@
 The purpose of this application is to practice unit testing skills, react, docker, and adding user authentication.
 
 ### Technology Stack
-Asp.Net Core 3.1
+* Asp.Net Core 3.1
+* React
+* Docker
+* AWS 
+  * ECS
+  * S3 
+  * CloudFront
+  * RDS (AWS Aurora - PostgreSQL)
+* Terraform
 
-React
-
-PostgreSQL
-
-Docker
-
-AWS ECS
-
-### Run the applciation using your we browser
+### Run the applciation using web browser
+In order to limit costs, the AWS deployment has been taken down. A terraform file is in the root directory that could be used to duplicate my configuration.
 
 ### Run the applciation locally (Development code)
 * Download [Docker](https://www.docker.com/products/docker-desktop) for your specific operating system.
@@ -21,6 +22,8 @@ AWS ECS
 * Using your terminal or command prompt, navigate into the root directory of the project
 * Run `docker-compose up -d`
 * Type `localhost:3000` into the web browser of your choice
+  * Guest User Username: brads.app.guest@gmail.com
+  * Guest User Password: LogInToBradsCoolWebApp
 
 ### Accessing the data without the React front end
 * In the upper right hand of the web page, click the "Sign Up" button to create an account or sign in if you already have one
