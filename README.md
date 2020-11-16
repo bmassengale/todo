@@ -25,7 +25,7 @@ In order to limit costs, the AWS deployment has been taken down. A terraform fil
   * Guest User Username: brads.app.guest@gmail.com
   * Guest User Password: LogInToBradsCoolWebApp
 
-### Accessing the data without the React front end
+#### Accessing the data without the React front end
 * In the upper right hand of the web page, click the "Sign Up" button to create an account or sign in if you already have one
 * After logging in, the homepage of the postman site will change to allow the beta feature of running postman in the browser
 * Click the "Launch Postman" button
