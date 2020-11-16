@@ -1,5 +1,5 @@
 # Full stack ToDo Application
-The purpose of this application is to practice unit testing skills, react, docker, and adding user authentication.
+The purpose of this application is to practice unit testing skills, react, docker, cloud deployments, and adding user authentication.
 
 ### Technology Stack
 * Asp.Net Core 3.1
