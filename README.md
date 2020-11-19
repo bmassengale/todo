@@ -1,5 +1,5 @@
 # Full stack ToDo Application
-The purpose of this application is to practice unit testing skills, react, docker, cloud deployments, and adding user authentication.
+The purpose of this application is to practice unit testing, react, docker, cloud deployments, terraform, and adding user authentication.
 
 ### Technology Stack
 * Asp.Net Core 3.1
@@ -13,7 +13,9 @@ The purpose of this application is to practice unit testing skills, react, docke
 * Terraform
 
 ### Run the applciation using web browser
-In order to limit costs, the AWS deployment has been taken down. A terraform file is in the root directory that could be used to duplicate my configuration.
+In order to limit costs, the AWS deployment has been taken down. A terraform file is in the root directory that could be used to duplicate my configuration. Admittedly, this does not have the most secure set up. 
+
+**Note:** This will NOT fully work until a few values in the code are updated. My personal Auth0 configuration will need to allow for the CloudFront URL. Check the Readme file in the terraform folder for the code updaates necessary and message me if you would like me to update my Auth0 configuraation.
 
 ### Run the applciation locally (Development code)
 * Download [Docker](https://www.docker.com/products/docker-desktop) for your specific operating system.
