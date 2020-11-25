@@ -35,4 +35,3 @@ services:
 
 networks:
   todo-network:
-    external: true
