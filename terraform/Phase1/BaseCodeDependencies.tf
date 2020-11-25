@@ -14,7 +14,7 @@ provider "aws" {
 
 #########################################
 #                                       #
-#       Front End React Deployment      #
+#       Code Bucket Deployments         #
 #                                       #
 #########################################
 
@@ -27,6 +27,12 @@ resource "aws_s3_bucket" "frontend_bucket" {
         index_document = "index.html"
         error_document = "index.html"
     }
+}
+
+# S3 bucket for backend code
+resource "aws_s3_bucket" "backend_bucket" {
+    bucket = "brads-magnificent-backend-api"
+    acl    = "private"
 }
 
 # Bucket policy that allows public access for above bucket
@@ -51,54 +57,6 @@ resource "aws_s3_bucket_policy" "frontend_bucket_policy" {
 }
 POLICY
 }
-
-# CloudFront distribution
-resource "aws_cloudfront_distribution" "frontend_endpoint_cloudfront" {
-    depends_on = [
-        aws_s3_bucket.frontend_bucket
-    ]
-    origin {
-        domain_name = aws_s3_bucket.frontend_bucket.website_endpoint
-        origin_id   = "S3todoFrontend"
-        custom_origin_config {
-            http_port              = "80"
-            https_port             = "443"
-            origin_protocol_policy = "http-only"
-            origin_ssl_protocols   = ["TLSv1", "TLSv1.1", "TLSv1.2"]
-        }
-    }
-    enabled = true
-    comment = "CloudFront distribution to react front end"
-    default_root_object = "index.html"
-    default_cache_behavior {
-        allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
-        cached_methods   = ["GET", "HEAD"]
-        target_origin_id = "S3todoFrontend"
-        viewer_protocol_policy = "redirect-to-https"
-        forwarded_values {
-            query_string = false
-
-            cookies {
-                forward = "none"
-            }
-        }
-    }
-    restrictions {
-        geo_restriction {
-            restriction_type = "whitelist"
-            locations        = ["US", "CA", "GB", "DE"]
-        }
-    }
-    viewer_certificate {
-        cloudfront_default_certificate = true
-    }
-}
-
-# Front end outputs
-output "CloudFront_url" {
-  value = aws_cloudfront_distribution.frontend_endpoint_cloudfront.domain_name
-}
-
 
 #########################################
 #                                       #
@@ -224,8 +182,55 @@ module "rds-aurora" {
   publicly_accessible = true
 
 }
+#########################################
+#                                       #
+#       Cloudfront Deployment           #
+#                                       #
+#########################################
 
-# DB outputs
+# CloudFront distribution
+resource "aws_cloudfront_distribution" "frontend_endpoint_cloudfront" {
+    depends_on = [
+        aws_s3_bucket.frontend_bucket
+    ]
+    origin {
+        domain_name = aws_s3_bucket.frontend_bucket.website_endpoint
+        origin_id   = "S3todoFrontend"
+        custom_origin_config {
+            http_port              = "80"
+            https_port             = "443"
+            origin_protocol_policy = "http-only"
+            origin_ssl_protocols   = ["TLSv1", "TLSv1.1", "TLSv1.2"]
+        }
+    }
+    enabled = true
+    comment = "CloudFront distribution to react front end"
+    default_root_object = "index.html"
+    default_cache_behavior {
+        allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
+        cached_methods   = ["GET", "HEAD"]
+        target_origin_id = "S3todoFrontend"
+        viewer_protocol_policy = "redirect-to-https"
+        forwarded_values {
+            query_string = false
+
+            cookies {
+                forward = "none"
+            }
+        }
+    }
+    restrictions {
+        geo_restriction {
+            restriction_type = "whitelist"
+            locations        = ["US", "CA", "GB", "DE"]
+        }
+    }
+    viewer_certificate {
+        cloudfront_default_certificate = true
+    }
+}
+
+# Outputs
 output "DB_Endpoint" {
   value = module.rds-aurora.this_rds_cluster_endpoint
 }
@@ -244,4 +249,8 @@ output "DB_Username" {
 
 output "DB_Password" {
    value = module.rds-aurora.this_rds_cluster_master_password
+}
+
+output "Cloudfront_URL" {
+   value = aws_cloudfront_distribution.frontend_endpoint_cloudfront.domain_name
 }
