@@ -410,6 +410,7 @@ override.tf.json
 terraform.rc
 
 */.vscode/*
+./.vscode
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
