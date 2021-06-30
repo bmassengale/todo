@@ -42,8 +42,5 @@ In order to limit my cost, the AWS deployment has been taken down. A terraform f
 **Problem:** There was a front end issue where a user wasn't shown as logged in until the web page was refreshed.  
 **Resolution:** Looking deeper into the Auth0 documentation showed an isLoading method that allowed me to hold off on rendering the web page until authorization was confirmed.
 
-**Problem:** During testing deployment, requests to my API would time out if a JWT was sent in the HTTP headers.  
-**Resolution:** Due to my impatience and readiness to move on to my next project, this is where security issues came in to play. My lambda function was made publicly accessible as opposed to being secured behind a VPC. Though bad practice, it worked. I intend to spend more effort into securiing the API in my next project.
-
 **Problem:** The thought process behind React Testing Library is still a struggle for me. The idea is to test the DOM, rather than the code implementation. While this is awesome, there doesn't seem to the ability to update React state. Since almost all of my components change based on the state, it seemed impossible to properly test different situations.  
 **Resolution:** TBD
